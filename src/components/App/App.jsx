@@ -17,17 +17,10 @@ class App extends Component {
 
   formSubmitHandler = data => {
     const { name } = data;
-    let isAdded = false;
-
-    this.state.contacts.forEach(el => {
-      if (el.name.toLowerCase() === name.toLowerCase()) {
-        alert(`${name} is already in contacts`);
-        isAdded = true;
-      }
-    });
-    if (!isAdded) {
-      this.setState(prevState => ({
-        contacts: [data, ...prevState.contacts],
+    if (this.state.contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+      alert(`${name} is already in contacts`);
+    } else {
+      this.setState(prevState => ({contacts: [data, ...prevState.contacts],
       }));
     }
   };
@@ -35,8 +28,7 @@ class App extends Component {
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
-
-
+  
   getVisibleContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
