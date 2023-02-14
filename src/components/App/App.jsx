@@ -17,18 +17,20 @@ class App extends Component {
 
   formSubmitHandler = data => {
     const { name } = data;
-    if (this.state.contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+    const searchContact = this.state.contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (searchContact) {
       alert(`${name} is already in contacts`);
-    } else {
-      this.setState(prevState => ({contacts: [data, ...prevState.contacts],
-      }));
+      return;
     }
+    this.setState(prevState => ({ contacts: [data, ...prevState.contacts] }));
   };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
-  
+
   getVisibleContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
